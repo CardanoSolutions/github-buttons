@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  const allowedQueryParams = new Set(['user', 'repo', 'type', 'count', 'size', 'text', 'title', 'v']);
+  const allowedQueryParams = new Set(['user', 'repo', 'type', 'count', 'size', 'text', 'title', 'background', 'v']);
 
   function getUrlParameters() {
     // TODO: Replace with URLSearchParams later
@@ -40,6 +40,7 @@
   const size = parameters.get('size');
   const noText = parameters.get('text');
   const title = decodeURIComponent(parameters.get('title') || '');
+  const background = decodeURIComponent(parameters.get('background')) || 'transparent';
   const v = parameters.get('v');
 
   // Elements
@@ -54,6 +55,8 @@
   const API_URL = 'https://api.github.com/';
   const REPO_URL = `${GITHUB_URL + user}/${repo}`;
   const USER_REPO = `${user}/${repo}`;
+
+  document.querySelector('body').style.background = background;
 
   window.callback = function(obj) {
     if (obj.data.message === 'Not Found') {
