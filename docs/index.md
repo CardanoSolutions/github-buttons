@@ -93,6 +93,7 @@ The following URL parameters are **not** required. Add them as you wish.
 | `count` | Show the optional watchers or forks count: *none* by default or `true` |
 | `size` | Optional flag for using a larger button: *none* by default or `large` |
 | `text` | Optional flag for hiding the text: *none* by default or `false` |
+| `title` | Optional text title for the button. Otherwise default to the type of button. |
 
 ---
 

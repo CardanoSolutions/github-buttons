@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  const allowedQueryParams = new Set(['user', 'repo', 'type', 'count', 'size', 'text', 'v']);
+  const allowedQueryParams = new Set(['user', 'repo', 'type', 'count', 'size', 'text', 'title', 'v']);
 
   function getUrlParameters() {
     // TODO: Replace with URLSearchParams later
@@ -39,6 +39,7 @@
   const count = parameters.get('count');
   const size = parameters.get('size');
   const noText = parameters.get('text');
+  const title = decodeURIComponent(parameters.get('title') || '');
   const v = parameters.get('v');
 
   // Elements
@@ -101,56 +102,56 @@
   // Set href to be URL for repo
   button.href = REPO_URL;
 
-  let title;
+  let label;
 
   // Add the class, change the text label, set count link href
   switch (type) {
     case 'watch': {
       if (v === '2') {
         mainButton.classList.add('github-watchers');
-        text.textContent = 'Watch';
+        text.textContent = title || 'Watch';
         counter.href = `${REPO_URL}/watchers`;
       } else {
         mainButton.classList.add('github-stargazers');
-        text.textContent = 'Star';
+        text.textContent = title || 'Star';
         counter.href = `${REPO_URL}/stargazers`;
       }
 
-      title = `${text.textContent} ${USER_REPO}`;
+      label = `${text.textContent} ${USER_REPO}`;
       break;
     }
 
     case 'star': {
       mainButton.classList.add('github-stargazers');
-      text.textContent = 'Star';
+      text.textContent = title || 'Star';
       counter.href = `${REPO_URL}/stargazers`;
-      title = `${text.textContent} ${USER_REPO}`;
+      label = `${text.textContent} ${USER_REPO}`;
       break;
     }
 
     case 'fork': {
       mainButton.classList.add('github-forks');
-      text.textContent = 'Fork';
+      text.textContent = title || 'Fork';
       button.href = `${REPO_URL}/fork`;
       counter.href = `${REPO_URL}/network`;
-      title = `${text.textContent} ${USER_REPO}`;
+      label = `${text.textContent} ${USER_REPO}`;
       break;
     }
 
     case 'follow': {
       mainButton.classList.add('github-me');
-      text.textContent = `Follow @${user}`;
+      text.textContent = title || `Follow @${user}`;
       button.href = GITHUB_URL + user;
       counter.href = `${GITHUB_URL + user}?tab=followers`;
-      title = text.textContent;
+      label = text.textContent;
       break;
     }
 
     case 'sponsor': {
       mainButton.classList.add('github-me');
-      text.textContent = `Sponsor @${user}`;
+      text.textContent = title || `Sponsor @${user}`;
       button.href = `${GITHUB_URL}sponsors/${user}`;
-      title = text.textContent;
+      label = text.textContent;
       break;
     }
   }
@@ -162,8 +163,8 @@
     text.textContent = '';
   }
 
-  button.setAttribute('aria-label', `${title} ${LABEL_SUFFIX}`);
-  document.title = `${title} ${LABEL_SUFFIX}`;
+  button.setAttribute('aria-label', `${label} ${LABEL_SUFFIX}`);
+  document.title = `${label} ${LABEL_SUFFIX}`;
 
   // Change the size if requested
   if (size === 'large') {
