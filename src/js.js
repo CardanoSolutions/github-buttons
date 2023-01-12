@@ -74,7 +74,8 @@
       }
 
       case 'star': {
-        counter.textContent = obj.data.stargazers_count && addCommas(obj.data.stargazers_count);
+        counter.textContent = '★ ';
+        counter.textContent += obj.data.stargazers_count && addCommas(obj.data.stargazers_count);
         counter.setAttribute('aria-label', `${counter.textContent} stargazers ${LABEL_SUFFIX}`);
         break;
       }
